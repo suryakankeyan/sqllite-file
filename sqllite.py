@@ -1,9 +1,9 @@
 import sqlite3  
-conn=sqlite3.connect('surya.db')
+conn=sqlite3.connect('suryasql.db')
 
 def insertdata(name,age,city):
-    qry="insert into student(name,age,city) values (?,?,?); "
-    conn.execute(qry(name,age,city))
+    qry="insert into data(name,age,city) values (?,?,?); "
+    conn.execute(qry,(name,age,city))
     conn.commit()
     print("successfully insert")
 print('''
@@ -19,7 +19,7 @@ while a==1:
         print("insert new record")
         name=input("enter the name: ")
         age=input("enter the age :")
-        city=input("enter the city :")
+        city=input("enter the city :")  
         insertdata(name,age,city)
     elif c==2 :
         print("update a record")

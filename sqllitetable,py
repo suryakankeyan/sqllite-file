@@ -1,0 +1,44 @@
+import sqlite3
+
+class database:
+    def __init__(self,db):
+        self.con=sqlite3.connect(db)
+        self.c=self.con.cursor()
+        self.c.execute("""
+           CREATE TABLE IF NOT EXISTS data(
+             id  INTEGER PRIMARY KEY,
+             name TEXT NOT NULL,
+             age INTEGER NOT NULL,
+             city TEXT NOT NULL
+             )       
+             """)
+        self.con.commit() 
+    def insert(self,name,age,city):
+        qry='''
+              INSERT INTO data values(null,?,?,?)
+            '''    
+        self.c.execute(qry,(name,age,city)) 
+        self.con.commit()   
+    def fetch_record(self):
+        result=self.c.execute("SELECT * FROM data")
+        for row in result:
+            print('/n',row)
+    def update_record(self,name,age,id):
+        qry='''
+            UPDATE data set name=?,age=? where id=?
+            '''
+        self.c.execute(qry,(name,age,id))
+        self.con.commit()
+    def delete_record(self,id):
+        qry='''
+            DELETE FROM data WHERE id=?
+            '''
+        self.c.execute(qry,(id,))
+        self.con.commit()
+
+
+obj=database('suryasql.db')
+#obj.insert('siva',33,'salem')
+obj.fetch_record()
+obj.update_record('sowdeesh',31,2)
+obj.delete_record(2)
